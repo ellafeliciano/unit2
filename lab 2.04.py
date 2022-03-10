@@ -82,3 +82,44 @@ print(b)
 Bonus - In your Notebook
 How would you access d from the list a?
 '''
+
+food = ['donuts', 'pancakes', 'bacon', 'waffles','eggs','baggles']
+score = [0,0,0,0,0,0]
+
+print('Please answer each questions with "y" for "yes" and "n" for "no."')
+user_input = input('Do you like food with holes? ')
+if user_input == 'y':
+  score[0] = score[0] + 1
+  score[5] = score[5] + 1
+
+user_input = input("Do you like sweet foods? ")
+if user_input =='y':
+    score[0] = score[0] + 1
+    score[1] = score[1] + 1
+    score[3] = score[3] + 1
+
+user_input = input("Do you like animal products? ")
+if user_input == 'y':
+    score[2] = score[2] + 1
+    score[4] = score[4] + 1
+
+user_input = input("Do you like food made with batter? ")
+if user_input == 'y':
+    score[1] = score[1] + 1
+    score[3] = score[3] + 1
+
+print(f"Donuts: {score[0]}")
+print(f"Pancakes: {score[1]}")
+print(f"Bacon: {score[2]}")
+print(f"Waffles: {score[3]}")
+print(f"Eggs: {score[4]}")
+print(f"Bagels: {score[5]}")
+
+fav_food_index = score.index(max(score))
+print(f"Your favorite food was {food[fav_food_index]}")
+
+food.pop(fav_food_index)
+score.pop(fav_food_index)
+
+fav_food_index = score.index(max(score))
+print(f"Your favorite food was {food[fav_food_index]}")

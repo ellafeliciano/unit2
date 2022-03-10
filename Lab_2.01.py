@@ -17,10 +17,8 @@ Create a program which will take in an input and print out that input divided by
 Alter one line of that program to return only whole numbers.
 
 '''
-number = input("Pick a number to divide by 2 ")
-number2 = 2
-result = number-number2
-print(result)
+number = int(input("Pick a number to divide by 2 "))
+print(number // 2)
 
 
 

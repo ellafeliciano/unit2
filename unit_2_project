@@ -1,0 +1,126 @@
+# introduction 
+print("Welcome to Text Monster! In this game there are 3 floors and 15 rooms. Your goal is to find the prize. However, you will run into some monsters. Your job is to get through all the monsters, and in order to do that you will type in the keys left, right, up, down, grab, and fight. Good luck! ")
+
+# map of dungeon 
+dungeon = [
+    ['sword', 'stairs down', 'sword', 'boss monster', 'prize'], 
+    ['stairs up', 'stairs down', 'magic stones', 'monster', 'sword'],
+    ['empty', 'sword', 'empty', 'monster', 'stairs up']
+    ]
+
+# player info
+inventory = []
+current_room = 0
+current_floor = 2
+location = dungeon[current_floor][current_room]
+game_over = False
+dead = False
+
+# game loop
+while game_over == False :
+
+    # update location 
+    location = dungeon[current_floor][current_room]
+
+    # describe where we are to the user 
+    if location == 'empty' :
+        print("You are in an empty room.")
+    elif location == 'sword' :
+        print("Yay! You found a sword.")
+    elif location == 'stairs up' : 
+        print("You see some stairs leading up.")
+    elif location == 'monster' :
+        print("Ahh! You see a scary monster.")
+    elif location == 'magic stones' :
+        print("Woo hoo! You found some magic stones.")
+    elif location == 'stairs down' :
+        print("You see some stairs leading down.")
+    elif location == 'boss monster' :
+        print("Oh no! You ran into the boss monster.")
+    elif location == 'prize' :
+        print("Congratulations! You have found the prize!")
+        game_over = True
+
+    # player choices 
+    player_choices = input("What would you like to do? (left, right, up, down, grab, fight, inventory): ")
+    print(player_choices)
+
+    # right command 
+    if player_choices == 'right' :
+        current_room += 1 
+        if current_room == 5:
+            print("You can't go any further in that direction.")
+            current_room = 4
+    
+    # left command 
+    elif player_choices == 'left' :
+        current_room -= 1
+        if current_room == -1:
+            print("You can't go any further in that direction.")
+            current_room = 0
+
+    # up command
+    elif player_choices == 'up' :
+        if location == 'stairs up' :
+            current_floor -= 1 
+        else:
+            print("There are no stairs leading up here.")
+
+    # down command 
+    elif player_choices == 'down' :
+        if location == 'stairs down' :
+            current_floor += 1
+        else:
+            print("There are no stairs leading down here.")
+
+    # grab command 
+    elif player_choices == 'grab' :
+        if location == 'sword' or location == 'magic stones':
+            inventory.append(location) 
+            dungeon[current_floor][current_room] = 'empty'
+        elif location == 'monster' or location == 'boss monster':
+            print("You silly goose! Why would you try to grab a monster?")
+            print("The monster just ate you...")
+            dead = True
+            game_over = True
+
+
+    # inventory command 
+    elif player_choices == 'inventory' :
+        print("You have: ")
+        print(', '.join(inventory)) # joins every item from the list with a space
+        
+    # fight command
+    elif player_choices == 'fight' :
+        pass
+        # only fight in room with a monster
+        if location == 'monster' :
+            # can only beat monster if they have a sword
+            if 'sword' in inventory:
+                print("Yay! You have killed a monster.")
+                dungeon[current_floor][current_room] = 'empty'
+                inventory.remove('sword')
+            else:
+                print("You silly goose! Why would you try to fight a monster without a sword?")
+                dead = True
+                game_over = True
+        elif location == 'boss monster':
+            # can only beat boss monster if they have a sword and magic stones
+            pass
+            if 'sword' in inventory and 'magic stones' in inventory:
+                print("Congratulations! You have killed the boss monster.")
+                dungeon[current_floor][current_room] = 'empty'
+                inventory.remove('sword')
+                inventory.remove('magic stones')
+            else:
+                print("You silly goose! Why would you fight a boss monster without a sword and magic stones?")
+                dead = True
+                game_over = True
+        else:
+            print("Sorry, there is nothing to fight here.")
+    
+# determine win/loss
+if dead == True:
+    print("Sorry, you died!")
+else:
+    print("Congratulations! You got the prize and won the game. ")
